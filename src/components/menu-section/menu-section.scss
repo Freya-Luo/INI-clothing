@@ -48,9 +48,12 @@
         border: none;
         border-radius: 8px;
         background-color: white;
-        opacity: 0.78;
+        opacity: 0.73;
         position: absolute;
 
+        &:hover {
+            opacity: 0.85;
+        }
         .title {
             font-weight: 600;
             margin-bottom: 6px;
