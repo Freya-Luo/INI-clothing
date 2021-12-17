@@ -2,9 +2,12 @@ import React from 'react'
 
 import './menu-section.scss'
 
-const MenuSection = ({ title }) => {
+const MenuSection = ({ title, url }) => {
     return (
-        <div className='menu-section'>
+        <div
+            style={{ backgroundImage: `url(${url})` }}
+            className='menu-section'
+        >
             <div className='content'>
                 <div className='title'>{title}</div>
                 <span className='subtitle'>SEE MORE</span>
