@@ -28,14 +28,14 @@ class Menu extends Component {
                     linkUrl: 'shop/sneakers',
                 },
                 {
-                    title: 'WOMENS',
-                    imageUrl: 'https://i.ibb.co/brHpHBC/Women.jpg',
+                    title: "All WOMEN'S",
+                    imageUrl: 'https://i.ibb.co/chBkt65/Women.jpg',
                     size: 'large',
                     id: 4,
                     linkUrl: 'shop/womens',
                 },
                 {
-                    title: 'MENS',
+                    title: "All MEN'S",
                     imageUrl: 'https://i.ibb.co/f2RqqvL/Men.jpg',
                     size: 'large',
                     id: 5,

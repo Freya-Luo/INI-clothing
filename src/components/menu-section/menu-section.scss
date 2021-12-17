@@ -5,11 +5,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid black;
+    border: none;
+    border-radius: 5px;
     margin: 0 7.5px 15px;
-    background-position: center;
-    background-size: cover;
+    overflow: hidden;
 
+    &:hover {
+        cursor: pointer;
+
+        & .background-img {
+            transform: scale(1.2);
+            transition: transform 5s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+        }
+    }
     &:first-child {
         margin-right: 7.5px;
     }
@@ -23,6 +31,13 @@
         height: 380px;
     }
 
+    .background-img {
+        width: 100%;
+        height: 100%;
+        background-position: center;
+        background-size: cover;
+    }
+
     .content {
         height: 90px;
         padding: 0 25px;
@@ -30,17 +45,21 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        border: 1px solid black;
+        border: none;
+        border-radius: 8px;
+        background-color: white;
+        opacity: 0.78;
+        position: absolute;
 
         .title {
-            font-weight: bold;
+            font-weight: 600;
             margin-bottom: 6px;
             font-size: 22px;
             color: #4a4a4a;
         }
 
         .subtitle {
-            font-weight: lighter;
+            font-family: 'Josefin Sans', sans-serif;
             font-size: 16px;
         }
     }
