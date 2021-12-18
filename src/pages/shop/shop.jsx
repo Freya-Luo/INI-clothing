@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import SHOP_DATA from './shop.data.js'
+import './shop.scss'
 import Preview from '../../components/preview/preview.jsx'
 
 class Shop extends Component {
