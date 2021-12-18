@@ -11,4 +11,7 @@
 -   `PreviewSection` component: for each `MenuSection` component, render some preview items - reuse
     -   a list of `Item` component
 -   `Item` component: keep the same structure and styles across `Shop` and `Detail` page - rreuse
+
     -   each has a functionality to direct to the checkout process
+
+-   `Header` component: Cross all pages, so put it in `App.js`
