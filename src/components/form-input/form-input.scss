@@ -1,9 +1,10 @@
 $color-grey: grey;
 
-@mixin shrinkLabel {
+@mixin swimUp {
     top: -14px;
     font-size: 12px;
     color: black;
+    font-weight: 500;
 }
 
 .input-wrapper {
@@ -27,8 +28,8 @@ $color-grey: grey;
             outline: none;
         }
 
-        &:focus ~ .form-input-label {
-            @include shrinkLabel();
+        &:focus ~ .input-label {
+            @include swimUp();
         }
     }
 
@@ -46,8 +47,8 @@ $color-grey: grey;
         top: 10px;
         transition: 300ms ease all;
 
-        &.shrink {
-            @include shrinkLabel();
+        &.swim-up {
+            @include swimUp();
         }
     }
 }
