@@ -18,11 +18,17 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
+        padding-right: 20px;
 
         .header-item {
             padding: 10px 15px;
             text-decoration: none;
             color: darkgrey;
+        }
+
+        .shopping-bag {
+            width: 30px;
+            padding-left: 10px;
         }
     }
 }

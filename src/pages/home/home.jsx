@@ -4,8 +4,7 @@ import './home.scss'
 import Menu from '../../components/menu/menu'
 
 const Home = () => (
-    <div className='homepage'>
-        <h1>See what meter brings to you!</h1>
+    <div className='home-page'>
         <Menu />
     </div>
 )
