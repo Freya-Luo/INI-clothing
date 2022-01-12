@@ -4,6 +4,8 @@ import './login.scss'
 import FormInput from '../form-input/form-input.jsx'
 import Button from '../button/button'
 
+import { signInWithGoogle } from '../../firebase/firebase.utils'
+
 class Login extends Component {
     constructor() {
         super()
@@ -47,6 +49,9 @@ class Login extends Component {
                         required
                     ></FormInput>
                     <Button type='submit'>Login</Button>
+                    <Button onClick={signInWithGoogle}>
+                        Login with Google
+                    </Button>
                 </form>
             </div>
         )
