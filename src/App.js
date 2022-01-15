@@ -7,17 +7,39 @@ import Shop from './pages/shop/shop.jsx'
 import Header from './components/header/header.jsx'
 import LoginOrRegister from './pages/login-register/login-register.jsx'
 
-function App() {
-    return (
-        <div>
-            <Header />
-            <Switch>
-                <Route exact path='/' component={Home} />
-                <Route path='/shop' component={Shop} />
-                <Route path='/login' component={LoginOrRegister} />
-            </Switch>
-        </div>
-    )
+import { auth } from './firebase/firebase.utils'
+
+class App extends React.Component {
+    constructor() {
+        super()
+
+        this.state = {
+            user: null,
+        }
+    }
+
+    componentDidMount() {
+        this.unsubscribe = auth.onAuthStateChanged((user) => {
+            this.setState({ user: user })
+        })
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe()
+    }
+
+    render() {
+        return (
+            <div>
+                <Header isLogin={this.state.user} />
+                <Switch>
+                    <Route exact path='/' component={Home} />
+                    <Route path='/shop' component={Shop} />
+                    <Route path='/login' component={LoginOrRegister} />
+                </Switch>
+            </div>
+        )
+    }
 }
 
 export default App

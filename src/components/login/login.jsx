@@ -29,7 +29,7 @@ class Login extends Component {
     render() {
         return (
             <div className='login'>
-                <h2>Already Registered ?</h2>
+                <h2 className='title'>Already Registered ?</h2>
                 <span>Login with your email and password.</span>
                 <form onSubmit={this.handleLogin}>
                     <FormInput
@@ -48,10 +48,12 @@ class Login extends Component {
                         handleChange={this.handleChange}
                         required
                     ></FormInput>
-                    <Button type='submit'>Login</Button>
-                    <Button onClick={signInWithGoogle}>
-                        Login with Google
-                    </Button>
+                    <div className='buttons'>
+                        <Button type='submit'>Login</Button>
+                        <Button onClick={signInWithGoogle} isThirdPartyLogin>
+                            Login with Google
+                        </Button>
+                    </div>
                 </form>
             </div>
         )

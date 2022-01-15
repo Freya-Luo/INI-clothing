@@ -7,7 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faUser, faGem } from '@fortawesome/free-regular-svg-icons'
 import './header.scss'
 
-const Header = () => (
+import { auth } from '../../firebase/firebase.utils'
+
+const Header = ({ isLogin }) => (
     <div className='header'>
         <Link className='logo-wrapper' to='/'>
             <Logo className='logo' />
@@ -19,9 +21,16 @@ const Header = () => (
             <Link className='header-item' to='/contact'>
                 <FontAwesomeIcon icon={faEnvelope} size='lg' /> CONTACT
             </Link>
-            <Link className='header-item' to='/login'>
-                <FontAwesomeIcon icon={faUser} size='lg' /> LOGIN
-            </Link>
+            {isLogin ? (
+                <div className='header-item' onClick={() => auth.signOut()}>
+                    <FontAwesomeIcon icon={faUser} size='lg' /> LOG OUT
+                </div>
+            ) : (
+                <Link className='header-item' to='/login'>
+                    <FontAwesomeIcon icon={faUser} size='lg' /> LOGIN
+                </Link>
+            )}
+
             <div className='shopping-bag'>
                 <ShoppingBag className='logo' />
             </div>

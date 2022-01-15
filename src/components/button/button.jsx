@@ -2,8 +2,11 @@ import React from 'react'
 
 import './button.scss'
 
-const Button = ({ children, ...restProps }) => (
-    <button className='button' {...restProps}>
+const Button = ({ children, isThirdPartyLogin, ...restProps }) => (
+    <button
+        className={`${isThirdPartyLogin ? 'third-party-login' : ''} button`}
+        {...restProps}
+    >
         {children}
     </button>
 )
