@@ -29,8 +29,8 @@ class Login extends Component {
     render() {
         return (
             <div className='login'>
-                <h2 className='title'>Already Registered ?</h2>
-                <span>Login with your email and password.</span>
+                <h2 className='title'>Already a member ?</h2>
+                <span>Login with your email and password</span>
                 <form onSubmit={this.handleLogin}>
                     <FormInput
                         type='email'

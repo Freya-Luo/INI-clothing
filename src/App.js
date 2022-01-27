@@ -7,7 +7,7 @@ import Shop from './pages/shop/shop.jsx'
 import Header from './components/header/header.jsx'
 import LoginOrRegister from './pages/login-register/login-register.jsx'
 
-import { auth, createUserProfile } from './firebase/firebase.utils'
+import { auth, createUser } from './firebase/firebase.utils'
 
 class App extends React.Component {
     constructor() {
@@ -19,9 +19,23 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        this.unsubscribe = auth.onAuthStateChanged(async (user) => {
-            this.setState({ user: user })
-            createUserProfile(user)
+        this.unsubscribe = auth.onAuthStateChanged(async (curUser) => {
+            if (curUser) {
+                const userRef = await createUser(curUser) // store the user in the database
+
+                userRef.onSnapshot((userSnapshot) => {
+                    // store the user in our app's state
+                    this.setState({
+                        user: {
+                            id: userSnapshot.id, // id gets from the snapshot
+                            ...userSnapshot.data(), // while other props (in createUser()) are stored in data()
+                        },
+                    })
+                    console.log(this.state)
+                })
+            } else {
+                this.setState({ user: curUser })
+            }
         })
     }
 

@@ -1,0 +1,9 @@
+.register {
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+
+    .title {
+        margin-bottom: 10px;
+    }
+}
