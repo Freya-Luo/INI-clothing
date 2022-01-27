@@ -20,22 +20,19 @@ provider.setCustomParameters({
 })
 
 export const signInWithGoogle = () => auth.signInWithPopup(provider)
-export const auth = firebase.auth()
-export const firestore = firebase.firestore()
-export default firebase
 
 export const createUser = async (user, otherInfo) => {
     if (!user) return
 
     const userRef = firestore.doc(`users/${user.uid}`)
-    const userSnapshot = userRef.get()
+    const userSnapshot = await userRef.get()
 
-    if (userSnapshot.exists) return
+    if (userSnapshot.exists) return userRef
+
+    const { displayName, email } = user
+    const createdAt = new Date()
 
     try {
-        const { displayName, email } = user
-        const createdAt = new Date()
-
         await userRef.set({
             displayName,
             email,
@@ -48,3 +45,7 @@ export const createUser = async (user, otherInfo) => {
 
     return userRef
 }
+
+export const auth = firebase.auth()
+export const firestore = firebase.firestore()
+export default firebase

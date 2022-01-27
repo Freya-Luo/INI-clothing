@@ -25,13 +25,17 @@ class App extends React.Component {
 
                 userRef.onSnapshot((userSnapshot) => {
                     // store the user in our app's state
-                    this.setState({
-                        user: {
-                            id: userSnapshot.id, // id gets from the snapshot
-                            ...userSnapshot.data(), // while other props (in createUser()) are stored in data()
+                    this.setState(
+                        {
+                            user: {
+                                id: userSnapshot.id, // id gets from the snapshot
+                                ...userSnapshot.data(), // while other props (in createUser()) are stored in data()
+                            },
                         },
-                    })
-                    console.log(this.state)
+                        () => {
+                            console.log(this.state)
+                        }
+                    )
                 })
             } else {
                 this.setState({ user: curUser })

@@ -53,16 +53,18 @@ class Register extends Component {
     }
 
     render() {
+        const { displayName, email, password, confirmPassword } = this.state
+
         return (
             <div className='register'>
                 <h2 className='title'>I am a new user</h2>
                 <span>Sign up with your email and password</span>
-                <form className='form' onSubmit={this.handleRegister}>
+                <form onSubmit={this.handleRegister}>
                     <FormInput
                         type='text'
                         name='displayName'
                         label='Username: '
-                        value={this.state.displayName}
+                        value={displayName}
                         handleChange={this.handleChange}
                         required
                     />
@@ -70,7 +72,7 @@ class Register extends Component {
                         type='email'
                         name='email'
                         label='Email: '
-                        value={this.state.email}
+                        value={email}
                         handleChange={this.handleChange}
                         required
                     />
@@ -78,7 +80,7 @@ class Register extends Component {
                         type='password'
                         name='password'
                         label='Password: '
-                        value={this.state.password}
+                        value={password}
                         handleChange={this.handleChange}
                         required
                     ></FormInput>
@@ -86,7 +88,7 @@ class Register extends Component {
                         type='password'
                         name='confirmPassword'
                         label='Confirm Password: '
-                        value={this.state.confirmPassword}
+                        value={confirmPassword}
                         handleChange={this.handleChange}
                         required
                     ></FormInput>
