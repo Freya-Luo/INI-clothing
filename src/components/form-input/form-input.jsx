@@ -1,25 +1,12 @@
-import React from 'react'
+import './form-input.scss';
 
-import './form-input.scss'
-
-const FormInput = ({ label, handleChange, ...restProps }) => (
-    <div className='input-wrapper'>
-        {label ? (
-            <label
-                className={`${
-                    restProps.value.length ? 'swim-up' : ''
-                } input-label`}
-            >
-                {label}
-            </label>
-        ) : null}
-        <input
-            className='input-field'
-            onChange={handleChange}
-            {...restProps}
-            required
-        />
+const FormInput = ({ label, ...otherProps }) => {
+  return (
+    <div className='group'>
+      <input className='form-input' {...otherProps} />
+      {label && <label className={`${otherProps.value.length ? 'shrink' : ''} form-input-label`}>{label}</label>}
     </div>
-)
+  );
+};
 
-export default FormInput
+export default FormInput;

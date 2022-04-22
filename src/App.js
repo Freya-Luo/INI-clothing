@@ -1,64 +1,23 @@
-import React from 'react'
-import { Route, Switch } from 'react-router-dom'
-import './App.css'
+import { Routes, Route } from 'react-router-dom';
 
-import Home from './pages/home/home.jsx'
-import Shop from './pages/shop/shop.jsx'
-import Header from './components/header/header.jsx'
-import LoginOrRegister from './pages/login-register/login-register.jsx'
+import Home from './routes/home/home';
+import Navigation from './routes/navigation/navigation';
+import Authentication from './routes/authentication/authentication';
 
-import { auth, createUser } from './firebase/firebase.utils'
+const Shop = () => {
+  return <h1>jjjjj</h1>;
+};
 
-class App extends React.Component {
-    constructor() {
-        super()
+const App = () => {
+  return (
+    <Routes>
+      <Route path='/' element={<Navigation />}>
+        <Route index element={<Home />} />
+        <Route path='shop' element={<Shop />} />
+        <Route path='auth' element={<Authentication />} />
+      </Route>
+    </Routes>
+  );
+};
 
-        this.state = {
-            user: null,
-        }
-    }
-
-    componentDidMount() {
-        this.unsubscribe = auth.onAuthStateChanged(async (curUser) => {
-            if (curUser) {
-                const userRef = await createUser(curUser) // store the user in the database
-
-                userRef.onSnapshot((userSnapshot) => {
-                    // store the user in our app's state
-                    this.setState(
-                        {
-                            user: {
-                                id: userSnapshot.id, // id gets from the snapshot
-                                ...userSnapshot.data(), // while other props (in createUser()) are stored in data()
-                            },
-                        },
-                        () => {
-                            console.log(this.state)
-                        }
-                    )
-                })
-            } else {
-                this.setState({ user: curUser })
-            }
-        })
-    }
-
-    componentWillUnmount() {
-        this.unsubscribe()
-    }
-
-    render() {
-        return (
-            <div>
-                <Header isLogin={this.state.user} />
-                <Switch>
-                    <Route exact path='/' component={Home} />
-                    <Route path='/shop' component={Shop} />
-                    <Route path='/login' component={LoginOrRegister} />
-                </Switch>
-            </div>
-        )
-    }
-}
-
-export default App
+export default App;
