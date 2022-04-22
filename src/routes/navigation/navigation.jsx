@@ -15,12 +15,7 @@ const Navigation = () => {
    * <=> If nothing changes on the DOM, re-render still won't happen.
    * But, all the code will be executed again.
    */
-  const { currentUser, setCurrentUser } = useContext(UserContext);
-
-  const signOutHandler = async () => {
-    await signOutUser();
-    setCurrentUser(null);
-  };
+  const { currentUser } = useContext(UserContext);
 
   return (
     <Fragment>
@@ -36,7 +31,7 @@ const Navigation = () => {
             <FontAwesomeIcon icon={faEnvelope} size='lg' /> CONTACT
           </Link>
           {currentUser ? (
-            <span className='nav-link' onClick={signOutHandler}>
+            <span className='nav-link' onClick={signOutUser}>
               <FontAwesomeIcon icon={faUser} size='lg' />
               SIGN OUT
             </span>

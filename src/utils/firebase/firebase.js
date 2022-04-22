@@ -7,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 
@@ -68,3 +69,6 @@ export const signInUser = async (email, password) => {
 };
 
 export const signOutUser = () => signOut(auth);
+
+// call the callback func we provide when "auth" singleton changes
+export const onAuthStateChangedListener = (cb) => onAuthStateChanged(auth, cb);
