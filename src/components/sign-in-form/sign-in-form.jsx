@@ -1,10 +1,8 @@
-import { useState } from 'react';
-
+import { useState, useContext } from 'react';
 import FormInput from '../form-input/form-input';
 import Button from '../button/button';
-
 import { signInWithGooglePopup, createUserFile, signInUser } from '../../utils/firebase/firebase';
-
+import { UserContext } from '../../contexts/user';
 import './sign-in-form.scss';
 
 const defaultFormFields = {
@@ -15,6 +13,8 @@ const defaultFormFields = {
 const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
+  // get the exact context object inside the context store
+  const { setCurrentUser } = useContext(UserContext);
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -29,7 +29,8 @@ const SignInForm = () => {
     event.preventDefault();
 
     try {
-      const response = await signInUser(email, password);
+      const { user } = await signInUser(email, password);
+      setCurrentUser(user); // store user in the context store
       // clear out the register form
       resetFormFields();
     } catch (error) {
