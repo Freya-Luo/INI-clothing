@@ -72,3 +72,4 @@ export const signOutUser = () => signOut(auth);
 
 // call the callback func we provide when "auth" singleton changes
 export const onAuthStateChangedListener = (cb) => onAuthStateChanged(auth, cb);
+// Observer pattern: (obj, nextCb, errorCb, completeCb);

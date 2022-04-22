@@ -1,12 +1,14 @@
 import { Fragment, useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import { UserContext } from '../../contexts/user';
-import { ReactComponent as Logo } from '../../assets/skyatlas.svg';
-import { ReactComponent as ShoppingBag } from '../../assets/shopping-bag.svg';
+import './navigation.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faUser, faGem } from '@fortawesome/free-regular-svg-icons';
 import { signOutUser } from '../../utils/firebase/firebase';
-import './navigation.scss';
+import { UserContext } from '../../contexts/user';
+import { ReactComponent as Logo } from '../../assets/skyatlas.svg';
+import CartIcon from '../../components/cart-icon/cart-icon';
+import CartDropdown from '../../components/cart-dropdown/cart-dropdown';
+import { CartContext } from '../../contexts/cart';
 
 const Navigation = () => {
   /**
@@ -16,6 +18,7 @@ const Navigation = () => {
    * But, all the code will be executed again.
    */
   const { currentUser } = useContext(UserContext);
+  const { cartHasItems } = useContext(CartContext);
 
   return (
     <Fragment>
@@ -41,10 +44,9 @@ const Navigation = () => {
               SIGN IN
             </Link>
           )}
-          <div className='shopping-bag'>
-            <ShoppingBag className='logo' />
-          </div>
+          <CartIcon />
         </div>
+        {cartHasItems && <CartDropdown />}
       </div>
       <Outlet />
     </Fragment>
