@@ -9,7 +9,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBIhMr3D2FueJE7Ol66vWgcgvTha1VUdSw',
@@ -33,6 +33,7 @@ googleProvider.setCustomParameters({
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 
+/* Authenticate user sign in, sign out, and sign up with firebase */
 // create user file
 export const createUserFile = async (user, additionalInformation = {}) => {
   if (!user) return;
@@ -73,3 +74,31 @@ export const signOutUser = () => signOut(auth);
 // call the callback func we provide when "auth" singleton changes
 export const onAuthStateChangedListener = (cb) => onAuthStateChanged(auth, cb);
 // Observer pattern: (obj, nextCb, errorCb, completeCb);
+
+/* Store the products data in the firebase db */
+export const addCollectionAndDocs = async (collectionKey, objects) => {
+  const collectionRef = collection(db, collectionKey);
+  const wBatch = writeBatch(db); // attach multiple writes to the batch, only when firing off, the transaction begins
+
+  objects.forEach((category) => {
+    const ref = doc(collectionRef, category.title.toLowerCase());
+    // return a doc ref even if it does not exist yet, just point to that placeholder
+    wBatch.set(ref, category); // set a new doc ref for each categroy obj
+  });
+
+  await wBatch.commit(); // fire off transaction, atomic
+};
+
+export const getCategoriesAndDocs = async () => {
+  const collectionRef = collection(db, 'categories');
+  const queryReq = query(collectionRef);
+  // query snapshot contains the results, can contain 0/1+ DocumentSnapshot objs
+  const querySnapshot = await getDocs(queryReq);
+  const map = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { title, items } = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return map;
+};
