@@ -75,7 +75,7 @@ export const signOutUser = () => signOut(auth);
 export const onAuthStateChangedListener = (cb) => onAuthStateChanged(auth, cb);
 // Observer pattern: (obj, nextCb, errorCb, completeCb);
 
-/* Store the products data in the firebase db */
+/* Store the categories data in the firebase db */
 export const addCollectionAndDocs = async (collectionKey, objects) => {
   const collectionRef = collection(db, collectionKey);
   const wBatch = writeBatch(db); // attach multiple writes to the batch, only when firing off, the transaction begins
