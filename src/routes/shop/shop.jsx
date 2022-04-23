@@ -1,19 +1,17 @@
-import { useContext, Fragment } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import CategoriesPreview from '../../components/category-preview/category-preview';
-import { CategoriesContext } from '../../contexts/categories';
+import CategoriesPreview from '../preview/preview';
+import Category from '../category/category';
 import './shop.scss';
 
+// use nested routing
+// index route: with no path, then renders in the parent's outlet at the parent's URL.
+// other routes: path":<param_name>""
 const Shop = () => {
-  const { categories } = useContext(CategoriesContext);
-
   return (
-    <div className='shop-container'>
-      {Object.keys(categories).map((title) => {
-        const products = categories[title];
-        return <CategoriesPreview key={title} title={title} products={products} />;
-      })}
-    </div>
+    <Routes>
+      <Route index element={<CategoriesPreview />} />
+      <Route path=':categoryName' element={<Category />} />
+    </Routes>
   );
 };
 
