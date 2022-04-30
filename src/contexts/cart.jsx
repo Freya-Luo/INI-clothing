@@ -1,11 +1,41 @@
-import { createContext, useState } from 'react';
-import { useEffect } from 'react';
+import { createContext, useReducer } from 'react';
+import { createAction } from '../utils/reducer/reducer';
 
-/**
- * The cart item needs to be a brand new object, with only fields being mutated, React
- * does not register that cart item as different, which re-render will not be triggered.
- */
-// return the whole cart items list
+const CART_ACTION_TYPES = {
+  SET_CART_HAS_ITEMS: 'SET_CART_HAS_ITEMS',
+  SET_CART_ITEMS: 'SET_CART_ITEMS',
+  SET_CART_ITEM_COUNT: 'SET_CART_ITEM_COUNT',
+  SET_CART_TOTAL_PRICE: 'SET_CART_TOTAL_PRICE',
+};
+
+const initState = {
+  cartHasItems: false,
+  cartItems: [],
+  cartItemCount: 0,
+  cartTotalPrice: 0,
+};
+
+/* ------------------ Cart reducer ----------------------- */
+const cartReducer = (state, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case CART_ACTION_TYPES.SET_CART_ITEMS:
+      return {
+        ...state,
+        ...payload,
+      };
+    case CART_ACTION_TYPES.SET_CART_HAS_ITEMS:
+      return {
+        ...state,
+        cartHasItems: payload.hasItems,
+      };
+    default:
+      console.log(`Unhandled type ${type} in cartReducer`);
+  }
+};
+
+/* ------------------------ Helpers dealing with cart items ----------------- */
 const addItem = (cartItems, product) => {
   // check if the item already exists
   const checkCartItem = cartItems.find((cartItem) => cartItem.id === product.id);
@@ -33,6 +63,8 @@ const removeItem = (cartItems, item) => {
 
 const clearItem = (cartItems, item) => cartItems.filter((cartItem) => cartItem.id !== item.id);
 
+/* ----------------------------- Cart Context Provider ------------------------- */
+// define context object interface
 export const CartContext = createContext({
   cartHasItems: false,
   setcartHasItems: () => {},
@@ -45,39 +77,43 @@ export const CartContext = createContext({
 });
 
 export const CartProvider = ({ children }) => {
-  const [cartHasItems, setcartHasItems] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
-  const [cartItemCount, setCartItemCount] = useState(0);
-  const [cartTotalPrice, setCartTotalPrice] = useState(0);
+  const [{ cartHasItems, cartItems, cartItemCount, cartTotalPrice }, dispatch] = useReducer(cartReducer, initState);
 
-  const addCartItem = (product) => setCartItems(addItem(cartItems, product));
-  const removeCartItem = (item) => {
-    setCartItems(removeItem(cartItems, item));
+  /* sub-routine helper reducers */
+  const updateCartItemsFireOff = (newCartItems) => {
+    const count = newCartItems.reduce((accCount, cartItem) => accCount + cartItem.quantity, 0);
+    const price = newCartItems.reduce((accPrice, cartItem) => accPrice + cartItem.quantity * cartItem.price, 0);
+
+    const payload = {
+      cartItems: newCartItems,
+      cartItemCount: count,
+      cartTotalPrice: price,
+    };
+
+    dispatch(createAction(CART_ACTION_TYPES.SET_CART_ITEMS, payload));
   };
-  const clearCartItem = (item) => {
-    setCartItems(clearItem(cartItems, item));
+
+  const setcartHasItemsFireOff = (hasItems) => {
+    const payload = { hasItems };
+    dispatch(createAction(CART_ACTION_TYPES.SET_CART_HAS_ITEMS, payload));
   };
-  // using separate useEffect to make each take single responsibility
-  useEffect(() => {
-    const count = cartItems.reduce((accCount, cartItem) => accCount + cartItem.quantity, 0);
-    setCartItemCount(count);
-  }, [cartItems]);
 
-  useEffect(() => {
-    const price = cartItems.reduce((accPrice, cartItem) => accPrice + cartItem.quantity * cartItem.price, 0);
-    setCartTotalPrice(price);
-  }, [cartItems]);
-
+  // object passed to the context provider
   const value = {
     cartHasItems,
-    setcartHasItems,
+    setcartHasItems: setcartHasItemsFireOff,
     cartItems,
-    addCartItem,
-    removeCartItem,
+    addCartItem: (product) => updateCartItemsFireOff(addItem(cartItems, product)),
+    removeCartItem: (item) => updateCartItemsFireOff(removeItem(cartItems, item)),
     cartItemCount,
-    clearCartItem,
+    clearCartItem: (item) => updateCartItemsFireOff(clearItem(cartItems, item)),
     cartTotalPrice,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
+
+/**
+ * The cart item needs to be a brand new object, with only fields being mutated, React
+ * does not register that cart item as different, which re-render will not be triggered.
+ */
