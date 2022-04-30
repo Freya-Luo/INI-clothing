@@ -1,5 +1,6 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useReducer, useEffect } from 'react';
 import { onAuthStateChangedListener, createUserFile } from '../utils/firebase/firebase';
+import { createAction } from '../utils/reducer/reducer';
 
 // storage context object, initialize it
 export const UserContext = createContext({
@@ -7,11 +8,30 @@ export const UserContext = createContext({
   setCurrentUser: () => null,
 });
 
+export const USER_ACTION_TYPES = {
+  SET_CURRENT_USER: 'SET_CURRENT_USER',
+};
+
+const initState = {
+  currentUser: null,
+};
+
+const userReducer = (state, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case USER_ACTION_TYPES.SET_CURRENT_USER:
+      return { ...state, currentUser: payload };
+    default:
+      console.log(`Unhandled type ${type} in userReducer`);
+  }
+};
+
 // provider component, wrap around any components that need access to the stored
 // data (passed by the value attr)
 export const UserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
-  const value = { currentUser, setCurrentUser };
+  const [{ currentUser }, dispatch] = useReducer(userReducer, initState);
+  const value = { currentUser };
 
   // first mounted, listener will check the authentication state automatically
   // when the listener is initialized (cb is executed first time);
@@ -22,7 +42,7 @@ export const UserProvider = ({ children }) => {
       if (user) {
         createUserFile(user); // will check is user exists
       }
-      setCurrentUser(user);
+      dispatch(createAction(USER_ACTION_TYPES.SET_CURRENT_USER, user));
     });
     // run whatever returned when the component is unmounted
     return unsubscribe;
@@ -30,3 +50,11 @@ export const UserProvider = ({ children }) => {
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
+
+/**
+ * useEffect and useReducer can cause the components to re-render each time there is a call
+ * to the update functions.
+ *
+ * But, it's not guaranteed that a re-rener won't occur when you do not mutate the state when
+ * using useReducer(), so put the code that has any potential side effects in useEffect hook.
+ */
