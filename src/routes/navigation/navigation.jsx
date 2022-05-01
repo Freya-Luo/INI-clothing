@@ -1,10 +1,13 @@
 import { Fragment, useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { Outlet, Link } from 'react-router-dom';
+import { selectCurrentUser } from '../../store/user/user-selector';
+
 import './navigation.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faUser, faGem } from '@fortawesome/free-regular-svg-icons';
 import { signOutUser } from '../../utils/firebase/firebase';
-import { UserContext } from '../../contexts/user';
+
 import { ReactComponent as Logo } from '../../assets/skyatlas.svg';
 import CartIcon from '../../components/cart-icon/cart-icon';
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown';
@@ -17,7 +20,7 @@ const Navigation = () => {
    * <=> If nothing changes on the DOM, re-render still won't happen.
    * But, all the code will be executed again.
    */
-  const { currentUser } = useContext(UserContext);
+  const currentUser = useSelector(selectCurrentUser);
   const { cartHasItems } = useContext(CartContext);
 
   return (
