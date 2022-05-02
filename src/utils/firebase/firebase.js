@@ -94,11 +94,5 @@ export const getCategoriesAndDocs = async () => {
   const queryReq = query(collectionRef);
   // query snapshot contains the results, can contain 0/1+ DocumentSnapshot objs
   const querySnapshot = await getDocs(queryReq);
-  const map = querySnapshot.docs.reduce((acc, docSnapshot) => {
-    const { title, items } = docSnapshot.data();
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {});
-
-  return map;
+  return querySnapshot.docs.map((snapshot) => snapshot.data());
 };
