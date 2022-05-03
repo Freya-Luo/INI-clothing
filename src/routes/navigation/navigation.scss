@@ -29,6 +29,17 @@
     .shopping-bag {
       width: 30px;
       padding-left: 10px;
+    }
   }
+
+  .cart-dropdown-bg {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 5;
+    background-color: transparent;
   }
 }

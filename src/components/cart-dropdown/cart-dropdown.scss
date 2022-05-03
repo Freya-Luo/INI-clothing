@@ -8,12 +8,11 @@
   border: 1px solid black;
   border-radius: 5px;
   background-color: #393838;
-  top: 90px;
-  right: 40px;
-  z-index: 5;
+  top: 20px;
+  right: calc(0.05 * (100vw - 20px * 2));
 
   &::before {
-    content: '';
+    content: "";
     border-style: solid;
     border-width: 15px 15px 15px 15px;
     border-color: transparent transparent #393838 transparent;

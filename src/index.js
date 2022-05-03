@@ -1,27 +1,23 @@
-import React from 'react';
-import { render } from 'react-dom';
-import './index.scss';
-import App from './App';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from './store/index';
+import React from "react";
+import { render } from "react-dom";
+import "./index.scss";
+import App from "./App";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./store/index";
 
-import { CartProvider } from './contexts/cart';
-
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 
 // products need to access the users
 render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <CartProvider>
-          <App />
-        </CartProvider>
+        <App />
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
-  rootElement
+  rootElement,
 );
 
 /**
