@@ -1,12 +1,11 @@
-import { Routes, Route } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getCategoriesAndDocs } from '../../utils/firebase/firebase';
-import { setCategories } from '../../store/categories/categories-action';
+import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-import CategoriesPreview from '../preview/preview';
-import Category from '../category/category';
-import './shop.scss';
+import Preview from "../preview/preview";
+import Category from "../category/category";
+import "./shop.scss";
+import { fetchCategories } from "../../store/categories/categories-action";
 
 // use nested routing
 // index route: with no path, then renders in the parent's outlet at the parent's URL.
@@ -15,17 +14,13 @@ const Shop = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const getData = async () => {
-      const categories = await getCategoriesAndDocs('categories');
-      dispatch(setCategories(categories));
-    };
-    getData();
+    dispatch(fetchCategories());
   }, []);
 
   return (
     <Routes>
-      <Route index element={<CategoriesPreview />} />
-      <Route path=':categoryName' element={<Category />} />
+      <Route index element={<Preview />} />
+      <Route path=":categoryName" element={<Category />} />
     </Routes>
   );
 };

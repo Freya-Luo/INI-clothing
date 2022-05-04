@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector } from "reselect";
 
 // React uses "===" to detect the equality, so memo "categories" in the store state
 // (inputSource, outputResult): inputs and result are cached for later use.
@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 // cached result is returned instead of recalculating a new result.
 export const memoCategories = createSelector(
   [(state) => state.categories],
-  (categoriesSlice) => categoriesSlice.categories
+  (categoriesSlice) => categoriesSlice.categories,
 );
 
 export const selectCategories = createSelector([memoCategories], (categories) =>
@@ -15,9 +15,10 @@ export const selectCategories = createSelector([memoCategories], (categories) =>
     const { title, items } = category;
     acc[title.toLowerCase()] = items;
     return acc;
-  }, {})
+  }, {}),
 );
 
+export const selectLoading = createSelector([(state) => state.categories], (categories) => categories.loading);
 /**
  * Update: using reselect to memorize the categories state.
  *

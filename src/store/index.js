@@ -2,10 +2,11 @@ import { createStore, applyMiddleware, compose } from "redux";
 import { rootReducer } from "./root-reducer";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import thunk from "redux-thunk";
 import logger from "redux-logger";
 
 // log redux state changes when in development mode
-const middleWares = process.env.NODE_ENV === "development" ? [logger] : [];
+const middleWares = process.env.NODE_ENV === "development" ? [logger, thunk] : [];
 
 // use redux devetools Chrome extension in the development mode
 const composeEnhancer =
