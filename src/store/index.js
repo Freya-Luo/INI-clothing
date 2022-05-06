@@ -6,7 +6,7 @@ import thunk from "redux-thunk";
 import logger from "redux-logger";
 
 // log redux state changes when in development mode
-const middleWares = process.env.NODE_ENV === "development" ? [logger, thunk] : [];
+const middleWares = process.env.NODE_ENV === "development" ? [logger, thunk] : [thunk];
 
 // use redux devetools Chrome extension in the development mode
 const composeEnhancer =
