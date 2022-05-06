@@ -1,14 +1,14 @@
-import './button.scss';
+import "./button.scss";
 
-const BUTTON_TYPE_CLASSES = {
-  google: 'google-sign-in',
-  inverted: 'inverted',
+export const BUTTON_TYPE_CLASSES = {
+  google: "google-sign-in",
+  inverted: "inverted",
 };
 
-const Button = ({ children, buttonType, ...otherProps }) => {
+const Button = ({ children, buttonType, loading = false, ...otherProps }) => {
   return (
-    <button className={`button-container ${BUTTON_TYPE_CLASSES[buttonType]}`} {...otherProps}>
-      {children}
+    <button className={`button-container ${BUTTON_TYPE_CLASSES[buttonType]}`} disabled={loading} {...otherProps}>
+      {loading ? <div className="button-loading"></div> : children}
     </button>
   );
 };
