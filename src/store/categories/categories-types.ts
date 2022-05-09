@@ -5,8 +5,9 @@ export enum CATEGORIES_ACTION_TYPES {
 }
 
 export type Category = {
+  id: number;
   title: string;
-  imageUrl: string;
+  routeName: string;
   items: CategoryItem[];
 };
 

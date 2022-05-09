@@ -20,7 +20,6 @@ export const fetchCategories = () => {
       // fetch categories success
       const categoriesRes = await getCategoriesAndDocs();
       const categories: Category[] = categoriesRes.map((each) => each as Category);
-      console.log(categoriesRes, categories);
       dispatch(createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_SUCCESS, categories));
     } catch (err) {
       if (err instanceof Error) {
