@@ -1,21 +1,25 @@
 import { createSelector } from "reselect";
+import { CategoriesState } from "./categories-reducer";
+import { Category, CategoryMap } from "./categories-types";
 
 // React uses "===" to detect the equality, so memo "categories" in the store state
 // (inputSource, outputResult): inputs and result are cached for later use.
 // If the selector is called again with the same arguments, the previously
 // cached result is returned instead of recalculating a new result.
 export const memoCategories = createSelector(
-  [(state) => state.categories],
+  [(state): CategoriesState => state.categories],
   (categoriesSlice) => categoriesSlice.categories,
 );
 
-export const selectCategories = createSelector([memoCategories], (categories) =>
-  // will returned the cached result by wrapped using reselect cache mechanism
-  categories.reduce((acc, category) => {
-    const { title, items } = category;
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {}),
+export const selectCategories = createSelector(
+  [memoCategories],
+  (categories: Category[]): CategoryMap =>
+    // will returned the cached result by wrapped using reselect cache mechanism
+    categories.reduce((acc, category) => {
+      const { title, items } = category;
+      acc[title.toLowerCase()] = items;
+      return acc;
+    }, {} as CategoryMap),
 );
 
 export const selectLoading = createSelector([(state) => state.categories], (categories) => categories.loading);
