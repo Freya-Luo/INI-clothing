@@ -1,5 +1,5 @@
 import { AnyAction } from "redux";
-import { CATEGORIES_ACTION_TYPES, Category } from "./categories-types";
+import { Category } from "./categories-types";
 import { fetchCategoriesStart, fetchCategoriesSuccess, fetchCategoriesFail } from "./categories-action";
 
 export type CategoriesState = {
@@ -24,7 +24,7 @@ export const CATEGORIES_INITIAL_STATE: CategoriesState = {
  * @param action action passed through, it indeed can be any action (AnyAction)
  * @returns new category state modified based on the action
  */
-export const categoriesReducer = (state = CATEGORIES_INITIAL_STATE, action = {} as AnyAction): CategoriesState => {
+export const categoriesReducer = (state = CATEGORIES_INITIAL_STATE, action: AnyAction): CategoriesState => {
   if (fetchCategoriesStart.match(action)) {
     return {
       ...state,

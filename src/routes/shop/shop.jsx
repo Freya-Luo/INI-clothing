@@ -14,7 +14,8 @@ const Shop = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCategories());
+    // dispatch(fetchCategories());
+    fetchCategories();
   }, []);
 
   return (
