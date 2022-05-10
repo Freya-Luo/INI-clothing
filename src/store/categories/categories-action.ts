@@ -1,5 +1,5 @@
 import { CATEGORIES_ACTION_TYPES, Category, CategoryItem } from "./categories-types";
-import { createAction, Action, ActionPayload } from "../../utils/reducer/reducer";
+import { createAction, Action, ActionPayload, matcher } from "../../utils/reducer/reducer";
 import { getCategoriesAndDocs } from "../../utils/firebase/firebase";
 import { Dispatch } from "react";
 
@@ -8,23 +8,32 @@ type FetchCategoriesStart = Action<CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_STAR
 type FetchCategoriesSuccess = ActionPayload<CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_SUCCESS, Category[]>;
 type FetchCategoriesFail = ActionPayload<CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAIL, Error>;
 
-export type CategoriesAction = FetchCategoriesStart | FetchCategoriesSuccess | FetchCategoriesFail;
+type CategoriesAction = FetchCategoriesStart | FetchCategoriesSuccess | FetchCategoriesFail;
+
+// enhanced, type-restricted action creators with custom matchers
+export const fetchCategoriesStart = matcher(() => createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START));
+export const fetchCategoriesSuccess = matcher((categories: Category[]) =>
+  createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_SUCCESS, categories),
+);
+export const fetchCategoriesFail = matcher((err: Error) =>
+  createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAIL, err),
+);
 
 // async action creation func: () => async (dispatch) => {}
 export const fetchCategories = () => {
   return async (dispatch: Dispatch<CategoriesAction>) => {
     // start fetching categories
-    dispatch(createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START));
+    dispatch(fetchCategoriesStart());
 
     try {
       // fetch categories success
       const categoriesRes = await getCategoriesAndDocs();
       const categories: Category[] = categoriesRes.map((each) => each as Category);
-      dispatch(createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_SUCCESS, categories));
+      dispatch(fetchCategoriesSuccess(categories));
     } catch (err) {
       if (err instanceof Error) {
         // fetch categories fail
-        dispatch(createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAIL, err));
+        dispatch(fetchCategoriesFail(err));
       }
     }
   };
