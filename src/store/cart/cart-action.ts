@@ -34,14 +34,14 @@ const clearItem = (cartItems: CartItem[], item: CategoryItem): CartItem[] =>
 /* action creators */
 // create action types for each action
 export type SetCartHasItems = ActionPayload<CART_ACTION_TYPES.SET_CART_HAS_ITEMS, boolean>;
-export type SetCartItem = ActionPayload<CART_ACTION_TYPES.SET_CART_ITEMS, CartItem[]>;
+export type SetCartItems = ActionPayload<CART_ACTION_TYPES.SET_CART_ITEMS, CartItem[]>;
 
 // enhanced, type-restricted action creators with custom matchers
-export const setCartHasItems = matcher((hasItems: boolean) =>
-  createAction(CART_ACTION_TYPES.SET_CART_HAS_ITEMS, hasItems),
+export const setCartHasItems = matcher(
+  (hasItems: boolean): SetCartHasItems => createAction(CART_ACTION_TYPES.SET_CART_HAS_ITEMS, hasItems),
 );
-export const setCartItems = matcher((cartItems: CartItem[]) =>
-  createAction(CART_ACTION_TYPES.SET_CART_ITEMS, cartItems),
+export const setCartItems = matcher(
+  (cartItems: CartItem[]): SetCartItems => createAction(CART_ACTION_TYPES.SET_CART_ITEMS, cartItems),
 );
 
 export const addCartItem = (cartItems: CartItem[], product: CategoryItem) => setCartItems(addItem(cartItems, product));

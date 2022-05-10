@@ -3,8 +3,8 @@ import { setCartHasItems, setCartItems } from "./cart-action";
 import { CartItem } from "./cart-types";
 
 export type CartState = {
-  cartHasItems: boolean;
-  cartItems: CartItem[];
+  readonly cartHasItems: boolean;
+  readonly cartItems: CartItem[];
 };
 
 const CART_INITIAL_STATE = {
@@ -12,7 +12,7 @@ const CART_INITIAL_STATE = {
   cartItems: [],
 };
 
-export const cartReducer = (state = CART_INITIAL_STATE, action: AnyAction): CartState => {
+export const cartReducer = (state = CART_INITIAL_STATE, action = {} as AnyAction): CartState => {
   if (setCartHasItems.match(action)) {
     return {
       ...state,
