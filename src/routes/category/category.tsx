@@ -6,8 +6,13 @@ import ProductCard from "../../components/product-card/product-card";
 import { selectCategories, selectLoading } from "../../store/categories/categories-selector";
 import "./category.scss";
 
+// make TS aware that param :categoryName should definitely be present if we hit here
+type CategoryRouteParams = {
+  categoryName: string;
+};
+
 const Category = () => {
-  const { categoryName } = useParams(); // defined by ":categoryName" in parent shop.jsx
+  const { categoryName } = useParams<keyof CategoryRouteParams>() as CategoryRouteParams; // defined by ":categoryName" in parent shop.jsx
   // !! map could be null as fetching data from db is async operation
   const categories = useSelector(selectCategories);
   const loading = useSelector(selectLoading);

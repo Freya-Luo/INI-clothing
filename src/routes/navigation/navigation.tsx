@@ -12,7 +12,7 @@ import { ReactComponent as Logo } from "../../assets/skyatlas.svg";
 import CartIcon from "../../components/cart-icon/cart-icon";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown";
 import { selectCartHasItems } from "../../store/cart/cart-selector";
-import { setCartHasItems } from "../../store/cart/cart-action";
+import { setCartHasItems, setCartItems } from "../../store/cart/cart-action";
 
 const Navigation = () => {
   /**
@@ -27,6 +27,11 @@ const Navigation = () => {
 
   const toggleCartDropdown = () => dispatch(setCartHasItems(!cartHasItems));
 
+  const clearData = () => {
+    signOutUser();
+    dispatch(setCartItems([]));
+  };
+
   return (
     <Fragment>
       <div className="navigation">
@@ -37,11 +42,8 @@ const Navigation = () => {
           <Link className="nav-link" to="/shop">
             <FontAwesomeIcon icon={faGem} size="lg" /> SHOP
           </Link>
-          <Link className="nav-link" to="/contact">
-            <FontAwesomeIcon icon={faEnvelope} size="lg" /> CONTACT
-          </Link>
           {currentUser ? (
-            <span className="nav-link" onClick={signOutUser}>
+            <span className="nav-link" onClick={clearData}>
               <FontAwesomeIcon icon={faUser} size="lg" />
               SIGN OUT
             </span>

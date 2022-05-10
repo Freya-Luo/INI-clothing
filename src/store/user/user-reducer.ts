@@ -2,6 +2,7 @@ import { USER_ACTION_TYPES } from "./user-types";
 import { AnyAction } from "redux";
 import { UserData } from "../../utils/firebase/firebase";
 import { setCurrentUser } from "./user-action";
+import { User } from "firebase/auth";
 
 export type UserState = {
   readonly currentUser: UserData | null;
