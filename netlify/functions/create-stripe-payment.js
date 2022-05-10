@@ -27,3 +27,11 @@ exports.handler = async (event) => {
     };
   }
 };
+
+/**
+ * For stripe, it wil block any payment requests sent from frontend as which is seen as the very
+ * insecure action. (CANNOT CARRY SECRET KEY ALONG WITH THE FRONTEND REQUEST)
+ *
+ * Keep secret key on the backend, frontend make a payment request to the backend, then backend make the
+ * true payment request carrying the secret key to the Stripe.
+ */

@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+import { RootState } from "..";
 import { CategoriesState } from "./categories-reducer";
 import { Category, CategoryMap } from "./categories-types";
 
@@ -7,7 +8,7 @@ import { Category, CategoryMap } from "./categories-types";
 // If the selector is called again with the same arguments, the previously
 // cached result is returned instead of recalculating a new result.
 export const memoCategories = createSelector(
-  [(state): CategoriesState => state.categories],
+  [(state: RootState): CategoriesState => state.categories],
   (categoriesSlice) => categoriesSlice.categories,
 );
 
@@ -22,7 +23,10 @@ export const selectCategories = createSelector(
     }, {} as CategoryMap),
 );
 
-export const selectLoading = createSelector([(state) => state.categories], (categories) => categories.loading);
+export const selectLoading = createSelector(
+  [(state: RootState) => state.categories],
+  (categories) => categories.loading,
+);
 /**
  * Update: using reselect to memorize the categories state.
  *
