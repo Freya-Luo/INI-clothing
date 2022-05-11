@@ -1,4 +1,4 @@
-import { createAction, matcher, Action, ActionPayload } from "../../utils/reducer/reducer";
+import { createAction, matcher, ActionPayload } from "../../utils/reducer/reducer";
 import { CART_ACTION_TYPES, CartItem } from "./cart-types";
 import { CategoryItem } from "../categories/categories-types";
 

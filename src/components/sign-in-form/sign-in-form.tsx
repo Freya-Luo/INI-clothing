@@ -2,7 +2,7 @@ import { useState, FormEvent, ChangeEvent } from "react";
 import { AuthError, AuthErrorCodes } from "firebase/auth";
 import FormInput from "../form-input/form-input";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button";
-import { signInWithGooglePopup, createUserFile, signInUser } from "../../utils/firebase/firebase";
+import { signInWithGooglePopup, signInUser } from "../../utils/firebase/firebase";
 
 import "./sign-in-form.scss";
 

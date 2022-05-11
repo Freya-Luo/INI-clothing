@@ -1,4 +1,4 @@
-import { CATEGORIES_ACTION_TYPES, Category, CategoryItem } from "./categories-types";
+import { CATEGORIES_ACTION_TYPES, Category } from "./categories-types";
 import { createAction, Action, ActionPayload, matcher } from "../../utils/reducer/reducer";
 import { getCategoriesAndDocs } from "../../utils/firebase/firebase";
 import { Dispatch } from "react";

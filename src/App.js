@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { onAuthStateChangedListener, createUserFile, UserData } from "./utils/firebase/firebase";
+import { onAuthStateChangedListener, createUserFile } from "./utils/firebase/firebase";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
@@ -26,7 +26,7 @@ const App = () => {
     });
     // run whatever returned when the component is unmounted
     return unsubscribe;
-  }, []);
+  }, [dispatch]);
 
   return (
     <Routes>

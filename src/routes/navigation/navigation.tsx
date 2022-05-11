@@ -5,7 +5,7 @@ import { selectCurrentUser } from "../../store/user/user-selector";
 
 import "./navigation.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faUser, faGem } from "@fortawesome/free-regular-svg-icons";
+import { faUser, faGem } from "@fortawesome/free-regular-svg-icons";
 import { signOutUser } from "../../utils/firebase/firebase";
 
 import { ReactComponent as Logo } from "../../assets/skyatlas.svg";
