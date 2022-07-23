@@ -1,23 +1,20 @@
-## Cloud Clouthing Shopping Site
+## Cloud Clothing Shopping Site
 
 ### Project Overview
 
-#### How to Start
+![Project Overview](./src/assets/clothing.gif)
 
-Deployed demo address: [Netlify hosting](https://tangerine-panda-aed6e8.netlify.app/)
+This a full-stack progressive web application which is just ike any traditional e-commerce sites. Users can browser categories, toggle cart items, and their identities are verified by Firebase authentication mechanism. By integrating Stripe API and Netlify hosting platform, any payment requests initiated in frontend, even mock ones, would be taken over by backend for the security purpose. (Need to carry SECRET KEY)
 
-##### Home
+Some extended features:
 
-- `Menu` component: a list of all the `MenuSection` components for `Home` page
-- `MenuSection` component: same structure and styles for all the 5 sections - reuse
+- Mobile responsiveness support
+- GraphQL server and Apollo client are applied to replace REST API
+- Service Worker is added into the existing project to convert it to PWA
 
-##### Shop
+#### How To Auto Deployed
 
-- `Preview` component: a list of `PreviewSection` component for `Shop` page
-- `PreviewSection` component: for each `MenuSection` component, render some preview items - reuse
-  - a list of `Item` component
-- `Item` component: keep the same structure and styles across `Shop` and `Detail` page - rreuse
+Deployed demo can be checked here: [Netlify hosting - cloud clouthing](https://tangerine-panda-aed6e8.netlify.app/)
 
-  - each has a functionality to direct to the checkout process
-
-- `Header` component: Cross all pages, so put it in `App.js`
+- `npm netlify login` to authenticate and get an access token
+- any code changes will be auto-deployed by Netlify once `git push` the commits
