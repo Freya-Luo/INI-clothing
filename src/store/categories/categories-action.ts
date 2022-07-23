@@ -2,6 +2,9 @@ import { CATEGORIES_ACTION_TYPES, Category } from "./categories-types";
 import { createAction, Action, ActionPayload, matcher } from "../../utils/reducer/reducer";
 import { getCategoriesAndDocs } from "../../utils/firebase/firebase";
 import { Dispatch } from "react";
+import { AnyAction } from "redux";
+import { ThunkAction } from "redux-thunk";
+import type {} from "redux-thunk/extend-redux";
 
 // create action types for each action
 type FetchCategoriesStart = Action<CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START>;
@@ -20,7 +23,7 @@ export const fetchCategoriesFail = matcher((err: Error) =>
 );
 
 // async action creation func: () => async (dispatch) => {}
-export const fetchCategories = () => {
+export const fetchCategories = (): ThunkAction<void, any, unknown, AnyAction> => {
   return async (dispatch: Dispatch<CategoriesAction>) => {
     // start fetching categories
     dispatch(fetchCategoriesStart());

@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
-
+import { useDispatch } from "react-redux";
 import Preview from "../preview/preview";
 import Category from "../category/category";
 import "./shop.scss";
@@ -10,9 +10,10 @@ import { fetchCategories } from "../../store/categories/categories-action";
 // index route: with no path, then renders in the parent's outlet at the parent's URL.
 // other routes: path":<param_name>""
 const Shop = () => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    // dispatch(fetchCategories());
-    fetchCategories();
+    dispatch(fetchCategories());
   }, []);
 
   return (

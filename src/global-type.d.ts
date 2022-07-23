@@ -4,6 +4,7 @@
  * Register any path ends with .svg by declaring modules. TS will import the appropriate
  * modules according to the following rules.
  */
+/// <reference types="redux-thunk/extend-redux" />
 declare module "*.svg" {
   import React = require("react");
   export const ReactComponent: React.FC<React.SVGProps<SVGSVGElement>>;
