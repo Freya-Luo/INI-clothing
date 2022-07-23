@@ -3,17 +3,23 @@ import { CART_ACTION_TYPES, CartItem } from "./cart-types";
 import { CategoryItem } from "../categories/categories-types";
 
 /* ------------------------ Helpers dealing with cart items ----------------- */
-const addItem = (cartItems: CartItem[], product: CategoryItem): CartItem[] => {
+const addItem = (cartItems: CartItem[], item: CategoryItem): CartItem[] => {
   // check if the item already exists
-  const checkCartItem = cartItems.find((cartItem) => cartItem.id === product.id);
+  const checkCartItem = cartItems.find((cartItem) => cartItem.id === item.id);
 
   if (checkCartItem) {
     return cartItems.map((cartItem) =>
-      cartItem.id === product.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem,
+      cartItem.id === item.id
+        ? {
+            ...cartItem,
+            quantity: cartItem.quantity + 1,
+            subPrice: cartItem.subPrice + item.price,
+          }
+        : cartItem,
     );
   }
 
-  return [...cartItems, { ...product, quantity: 1 }];
+  return [...cartItems, { ...item, quantity: 1, subPrice: item.price }];
 };
 
 const removeItem = (cartItems: CartItem[], item: CategoryItem): CartItem[] => {
@@ -22,7 +28,13 @@ const removeItem = (cartItems: CartItem[], item: CategoryItem): CartItem[] => {
   // check if quantity is equal to 1, if it is remove that item from the cart
   if (checkCartItem && checkCartItem.quantity !== 1) {
     return cartItems.map((cartItem) =>
-      cartItem.id === item.id ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem,
+      cartItem.id === item.id
+        ? {
+            ...cartItem,
+            quantity: cartItem.quantity - 1,
+            subPrice: cartItem.subPrice - item.price,
+          }
+        : cartItem,
     );
   }
   return cartItems.filter((cartItem) => cartItem.id !== item.id);

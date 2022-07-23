@@ -10,7 +10,7 @@ type CheckoutItemProps = {
 };
 
 const CheckoutItem: FC<CheckoutItemProps> = ({ cartItem }) => {
-  const { name, imageUrl, price, quantity } = cartItem;
+  const { name, imageUrl, subPrice, quantity } = cartItem;
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
 
@@ -31,7 +31,7 @@ const CheckoutItem: FC<CheckoutItemProps> = ({ cartItem }) => {
         </div>
       </span>
 
-      <span className="price"> {price}</span>
+      <span className="price"> {subPrice}</span>
 
       <div className="remove-button" onClick={() => dispatch(clearCartItem(cartItems, cartItem))}>
         &#10005;
