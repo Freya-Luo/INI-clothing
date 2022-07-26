@@ -43,4 +43,9 @@
       border: none;
     }
   }
+
+  @media screen and (max-width: 800px) {
+    padding: 0 15px 0 15px;
+    font-size: 0.8rem;
+  }
 }

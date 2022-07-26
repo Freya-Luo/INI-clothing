@@ -1,6 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
-import "./index.scss";
+
+import { GlobalStyle } from "./global-style";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -19,6 +20,7 @@ render(
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <Elements stripe={stripePromise}>
+            <GlobalStyle />
             <App />
           </Elements>
         </BrowserRouter>
